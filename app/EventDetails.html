@@ -46,8 +46,20 @@
             <br/>
 
             <h3>Sessions</h3>
+            Order by:
+            <select ng-model="sortorder" class="input-small">
+                <option selected value="name">Name</option>
+                <option value="-upVoteCount">Votes</option>
+            </select>
+            Show:
+            <select ng-model="query.level" class="input-small">
+                <option selected value="">All</option>
+                <option selected value="Introductory">Introductory</option>
+                <option selected value="Intermediate">Intermediate</option>
+                <option selected value="Advanced">Advanced</option>
+            </select>
             <u1 class = "thumbnails">
-                <li ng-repeat="session in event.sessions">
+                <li ng-repeat="session in event.sessions | orderBy:sortorder |filter:query">
                     <div class="row session">
                         <div class="span0 well votingWidget">
                             <div class="votingButton" ng-click="upVoteSession(session)">
@@ -63,7 +75,7 @@
                         <div class="well span9">
                             <h4 class="well-title">{{session.name}}</h4>
                             <h6 style="margin-top:-10px">{{session.creatorName}}</h6>
-                            <span>Duration: {{session.duration}}</span><br/>
+                            <span>Duration: {{session.duration | durations}}</span><br/>
                             <span>Level: {{session.level}}</span><br/>
                         </div>
                     </div>
@@ -79,5 +91,6 @@
     <script src="/js/app.js"></script>
     <script src="/js/controllers/EventController.js"></script>
     <script src="/lib/angular/angular-sanitize.js"></script>
+    <script src="/js/filters.js"></script>
 </body>
 </html>
